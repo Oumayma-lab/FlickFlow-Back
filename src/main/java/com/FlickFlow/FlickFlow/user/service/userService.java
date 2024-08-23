@@ -1,5 +1,6 @@
 package com.FlickFlow.FlickFlow.user.service;
 
+import com.FlickFlow.FlickFlow.movie.entity.movie;
 import com.FlickFlow.FlickFlow.user.dto.roleDto;
 import com.FlickFlow.FlickFlow.user.dto.userDto;
 import com.FlickFlow.FlickFlow.user.entity.role;
@@ -11,16 +12,18 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import com.FlickFlow.FlickFlow.movie.repository.movieRepository;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class userService {
-
+    @Autowired
     private final userRepository userRepository;
     private BCryptPasswordEncoder passwordEncoder;
+
     @Autowired
     public userService(userRepository userRepository,BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -40,7 +43,6 @@ public class userService {
     }
     public userDto register(userDto userDTO) {
         if (userDTO.getPassword() != null) {
-            String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
             if (userRepository.findByEmail(userDTO.getEmail()) != null) {
                 throw new RuntimeException("Email already in use");
             }
@@ -50,6 +52,10 @@ public class userService {
             user.setUsername(userDTO.getUsername());
             user.setEmail(userDTO.getEmail());
             user.setPassword(passwordEncoder.encode(userDTO.getPassword())); // Hashing password
+            user.setBirthday(userDTO.getBirthday());
+            user.setSubscriptionType(userDTO.getSubscriptionType());
+            user.setJoinDate(LocalDate.now()); // Set current date as join date
+            user.setPreferences(userDTO.getPreferences()); // Set preferences
             user = userRepository.save(user);
 
             return convertToDTO(user);
@@ -114,5 +120,10 @@ public class userService {
         return dto;
     }
 
+//    public List<movie> getRecommendations(int userId) {
+//        user user = userRepository.findByUserId(userId);
+//        List<String> preferences = user.getPreferences();
+//        return movieRepository.findByGenresIn(preferences);
+//    }
 
 }

@@ -2,17 +2,17 @@ package com.FlickFlow.FlickFlow.user.Request;
 
 
 public class JwtResponse {
-    private String token;
-
-    public JwtResponse(String token) {
-        this.token = token;
+    private final String jwt;
+    private final String username;
+    public JwtResponse(String jwt, String username) {
+        this.jwt = jwt;
+        this.username = username;
     }
 
-    public String getToken() {
-        return token;
+    public String getJwt() {
+        return jwt;
     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-}
+    public String getUsername() {
+        return username;
+    }}

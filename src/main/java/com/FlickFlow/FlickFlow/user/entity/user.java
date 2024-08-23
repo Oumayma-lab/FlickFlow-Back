@@ -1,13 +1,15 @@
 package com.FlickFlow.FlickFlow.user.entity;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "user")
-public class user {
+public class user   {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,12 +40,24 @@ public class user {
     @Column(name = "subscriptionType")
     private String subscriptionType;
 
+    @ElementCollection
+    private List<String> preferences;
+
+    public List<String> getPreferences() {
+        return preferences;
+    }
+
+    public void setPreferences(List<String> preferences) {
+        this.preferences = preferences;
+    }
+
     @ManyToMany
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
+
 
     //@ElementCollection
     //@Column(name = "preference")

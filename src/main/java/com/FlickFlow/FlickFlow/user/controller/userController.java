@@ -1,5 +1,6 @@
 package com.FlickFlow.FlickFlow.user.controller;
 
+import com.FlickFlow.FlickFlow.movie.entity.movie;
 import com.FlickFlow.FlickFlow.user.Request.LoginRequest;
 import com.FlickFlow.FlickFlow.user.Request.SignInRequest;
 import com.FlickFlow.FlickFlow.user.dto.userDto;
@@ -29,25 +30,25 @@ public class userController {
     private static final Logger log = LoggerFactory.getLogger(userController.class);
 
 
-//    @PostMapping("/signup")
+    //    @PostMapping("/signup")
 //    @ResponseStatus(HttpStatus.CREATED)
 //    public userDto registerUser(@RequestBody userDto userDto) {
 //        return userService.register(userDto);
 //    }
-@PostMapping("/signup")
-public ResponseEntity<?> registerUser(@RequestBody userDto userDto) {
-    try {
-        log.info("Registering user: " + userDto);
-        userService.register(userDto);
-//        return ResponseEntity.ok().body("User registered successfully");
-
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new ApiResponse("User registered successfully"));
-    } catch (Exception e) {
-        log.error("Error registering user", e);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error registering user: " + e.getMessage());
+    @PostMapping("/signup")
+    public ResponseEntity<?> registerUser(@RequestBody userDto userDto) {
+        try {
+            log.info("Registering user: " + userDto);
+            userService.register(userDto);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(new ApiResponse("User registered successfully"));
+        } catch (Exception e) {
+            log.error("Error registering user", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error registering user: " + e.getMessage());
+        }
     }
-}
+
+
 
     @PostMapping("/signin")
     public ResponseEntity<?> signIn(@RequestBody userDto userDto) {
@@ -118,5 +119,11 @@ public ResponseEntity<?> registerUser(@RequestBody userDto userDto) {
             this.message = message;
         }
     }
+
+//    @GetMapping("/{id}/recommendations")
+//    public ResponseEntity<List<movie>> getRecommendations(@PathVariable int id) {
+//        List<movie> recommendations = userService.getRecommendations(id);
+//        return new ResponseEntity<>(recommendations, HttpStatus.OK);
+//    }
 
 }

@@ -7,10 +7,12 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface userRepository extends JpaRepository<user, Integer>, CrudRepository<user, Integer> {
     user findByUsername(String username);
     user findByEmail(String email);
+
     user findByUserId(int id);
 //    @Query("SELECT u FROM user u JOIN u.roles r WHERE r.roleId = :roleId")
 //    List<user> findUsersByRole(@Param("roleId") int roleId);

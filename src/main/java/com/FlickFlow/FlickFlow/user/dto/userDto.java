@@ -26,7 +26,7 @@ public class userDto {
     private LocalDate birthday;
     private LocalDate joinDate;
     private String subscriptionType;
-    private List<String> preference;
+    private List<String> preferences;
     private Set<roleDto> roles;
 
 
@@ -101,11 +101,11 @@ public class userDto {
         this.subscriptionType = subscriptionType;
     }
 
-    public List<String> getPreference() {
-        return preference;
+    public List<String> getPreferences() {
+        return preferences;
     }
 
-    public void setPreference(List<String> preference) {
-        this.preference = preference;
+    public void setPreferences(List<String> preferences) {
+        this.preferences = preferences;
     }
 }
